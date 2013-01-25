@@ -10,7 +10,7 @@ public abstract class InstanceBuilder<T> {
     protected T clinicalCase;
     protected Instance result;
     protected Instances dataset;
-    protected boolean includeClass = false;
+    protected boolean includeClass = true;
 
     public InstanceBuilder(int numAttributes, T clinicalCase, Instances dataset) {
         this.clinicalCase = clinicalCase;

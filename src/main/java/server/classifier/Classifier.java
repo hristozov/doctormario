@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import server.classifier.dataset.ClinicalCaseAttributeCreator;
 import server.classifier.instance.ClinicalCaseInstanceBuilder;
 import weka.classifiers.Evaluation;
+import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.functions.VotedPerceptron;
 import weka.core.FastVector;
 import weka.core.Instance;
@@ -58,15 +59,20 @@ public class Classifier {
         trainingSet.setClassIndex(trainingSet.numAttributes() - 1);
 
         for (ClinicalCase clinicalCase : res) {
-            trainingSet.add(new ClinicalCaseInstanceBuilder(8, clinicalCase, trainingSet).toInstance());
+            trainingSet.add(
+                    new ClinicalCaseInstanceBuilder(8, clinicalCase, trainingSet)
+                            .setIncludeClass(true)
+                            .toInstance());
         }
 
-        classifier = new VotedPerceptron();
+        //classifier = new VotedPerceptron();
+        classifier = new NaiveBayes();
 
         classifier.buildClassifier(trainingSet);
         Evaluation ev = new Evaluation(trainingSet);
         ev.crossValidateModel(classifier, trainingSet, 10, new Random(1));
         logger.info(ev.toSummaryString());
+        System.out.println(ev.toSummaryString());
         isReady = true;
     }
 
