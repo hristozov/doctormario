@@ -18,7 +18,7 @@ public class WebServer implements Server {
 
     public void start() {
 
-        final String baseUri = "http://localhost:8080/";
+        final String baseUri = "http://0.0.0.0:8080/";
         final Map<String, String> initParams = new HashMap<String, String>();
 
         initParams.put("com.sun.jersey.config.property.packages","service");
